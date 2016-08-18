@@ -1,0 +1,9 @@
+[package]
+name = "find_directories"
+version = "0.1.0"
+authors = ["Kevin <theunnameddude2@gmail.com>"]
+license = "MIT"
+
+[dependencies.user_directories]
+path = "../../"
+version = "*"

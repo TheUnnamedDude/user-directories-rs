@@ -1,0 +1,10 @@
+[package]
+name = "user_directories"
+version = "0.1.0"
+authors = ["Kevin <theunnameddude2@gmail.com>"]
+description = "Simple crate for finding common user directories"
+license = "MIT"
+homepage = "https://github.com/TheUnnamedDude"
+repository = "https://github.com/TheUnnamedDude/user-directories-rs"
+
+[dependencies]
