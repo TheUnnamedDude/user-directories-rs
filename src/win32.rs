@@ -3,8 +3,7 @@ use std::ptr;
 
 use shell32;
 use ole32;
-use winapi::shtypes::REFKNOWNFOLDERID;
-use winapi::guiddef::GUID;
+use winapi::{GUID, MAX_PATH, REFKNOWNFOLDERID};
 
 /*
 FOLDERID_Desktop
@@ -134,17 +133,22 @@ pub fn get_path(folder_id: REFKNOWNFOLDERID) -> Option<PathBuf> {
     unsafe {
         let mut path_ptr: *mut u16 = ptr::null_mut();
         shell32::SHGetKnownFolderPath(folder_id, 0, ptr::null_mut(), &mut path_ptr);
-        let mut string_content = vec!();
-        let mut i = 0;
-        loop {
-            let char = *path_ptr.offset(i);
+        let mut string_content: [u16; MAX_PATH] = [0; MAX_PATH];
+        let mut size = 0;
+        let mut found_size = false;
+        for i in 0..string_content.len() {
+            let char = *path_ptr.offset(i as isize);
             if char == 0 {
+                size = i;
+                found_size = true;
                 break;
             }
-            string_content.push(char);
-            i += 1;
+            string_content[i] = char;
+        }
+        if !found_size {
+            size = string_content.len();
         }
         ole32::CoTaskMemFree(path_ptr as *mut _);
-        Some(PathBuf::from(String::from_utf16_lossy(string_content.as_slice())))
+        Some(PathBuf::from(String::from_utf16_lossy(&string_content[0..size])))
     }
 }
