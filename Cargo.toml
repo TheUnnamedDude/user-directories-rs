@@ -8,3 +8,8 @@ homepage = "https://github.com/TheUnnamedDude"
 repository = "https://github.com/TheUnnamedDude/user-directories-rs"
 
 [dependencies]
+
+[target.'cfg(target_os = "windows")'.dependencies]
+winapi = "0.2.8"
+shell32-sys = "0.1.1"
+ole32-sys = "0.2.0"

@@ -2,6 +2,17 @@
 #[path="linux.rs"]
 mod platform;
 
+#[cfg(target_os="windows")]
+#[path="win32.rs"]
+mod platform;
+
+#[cfg(target_os="windows")]
+extern crate winapi;
+#[cfg(target_os="windows")]
+extern crate shell32;
+#[cfg(target_os="windows")]
+extern crate ole32;
+
 use std::path::PathBuf;
 
 pub use platform::*;
@@ -20,6 +31,7 @@ pub fn find_directory(folder_type: &DirectoryType) -> Option<PathBuf> {
     }
 }
 
+#[derive(Debug)]
 pub enum DirectoryType {
     Config,
     Home,
