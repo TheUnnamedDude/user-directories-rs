@@ -6,6 +6,10 @@ mod platform;
 #[path="win32.rs"]
 mod platform;
 
+#[cfg(target_os="macos")]
+#[path="macos.rs"]
+mod platform;
+
 #[cfg(target_os="windows")]
 extern crate winapi;
 #[cfg(target_os="windows")]
